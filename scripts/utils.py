@@ -1,8 +1,9 @@
+import numpy as np
 from astropy.table import Table
 import matplotlib.pyplot as plt
 
 __all__ = ['load_plt_params', 'load_parula', 'pipeline_dictionary',
-           'convolve_model']
+           'convolve_model', 'convolve_model_xy']
 
 def load_plt_params():
     """ Load in plt.rcParams and set (based on paper defaults).
@@ -46,3 +47,13 @@ def convolve_model(filename, R=300):
     yker /= yker.sum()
     model_to_plot=np.convolve(model[:,1],yker,mode='same') #convolving
     return model[:,0], model_to_plot
+
+
+def convolve_model_xy(y, R=300):
+    R0=3000.0 #cross-section resolution
+    xker = np.arange(1000)-500
+    sigma = (R0/R)/(2.* np.sqrt(2.0*np.log(2.0)))
+    yker = np.exp(-0.5 * (xker / sigma)**2.0)
+    yker /= yker.sum()
+    model_to_plot=np.convolve(y,yker,mode='same') #convolving
+    return model_to_plot
