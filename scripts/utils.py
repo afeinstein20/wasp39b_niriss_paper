@@ -19,7 +19,7 @@ def load_plt_params():
 def load_parula():
     """ Load in custom parula colormap.
     """
-    colors = np.load('parula_colors.npy')
+    colors = np.load('../data/parula_colors.npy')
     return colors
 
 def pipeline_dictionary():
