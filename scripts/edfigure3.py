@@ -1,3 +1,5 @@
+# PLOTS THE STELLAR SPECTRA FROM ALL PIPELINES
+
 import os
 import numpy as np
 import matplotlib.pyplot as plt

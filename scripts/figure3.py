@@ -1,3 +1,5 @@
+# PLOTS THE C/O AND METALLICITY MODELS
+
 import os, sys
 import pickle
 from datetime import datetime
