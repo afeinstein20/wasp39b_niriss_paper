@@ -59,8 +59,6 @@ fig.set_facecolor('w')
 
 cutends = 15
 
-#b0acaa
-
 q = data['quality']==0
 ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
          xerr=data['wave_error'][q],
@@ -89,13 +87,11 @@ ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
 
 ref = convolve_model(ref_file)
 
-ax0.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends],
-        label='ref. [2.59]', lw=3,
-        c='k', zorder=10)
-
-ax.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends],
-        label='Ref.', lw=3,
-        c='k', zorder=10)
+# plots the reference model on both axes
+for a in [ax, ax0]:
+    a.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends],
+            label='ref. [2.59]', lw=3,
+            c='k', zorder=10)
 
 # sets the key for the color/label dictionary based on the filename
 def set_key(filename):
