@@ -98,7 +98,7 @@ plt.ylabel('transit depth [%]')
 # Sets the x-limit, x-scale, and x-ticks
 plt.xscale('log')
 plt.xlim(0.6,2.86)
-xticks = np.append(np.linspace(0.63,2,6), np.linspace(2.3,2.8,2))
+xticks = np.append(np.linspace(0.6,2,6), np.linspace(2.3,2.8,2))
 xticks = np.round(xticks,2)
 plt.xticks(xticks, labels=np.round(xticks,2))
 
@@ -112,6 +112,9 @@ leg = plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
 # Increases markersize in the legend
 for legobj in leg.legendHandles:
     legobj.set_linewidth(3.0)
+
+plt.minorticks_off()
+
 
 plt.savefig('../figures/transmission_spectrum.pdf', dpi=300, rasterize=True,
             bbox_inches='tight')

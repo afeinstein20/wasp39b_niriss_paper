@@ -88,7 +88,7 @@ ax2.set_ylabel('transit depth [%]')
 # Sets the x-limit, x-scale, and x-ticks
 plt.xscale('log')
 plt.xlim(0.6,2.86)
-xticks = np.append(np.linspace(0.63,2,6), np.linspace(2.3,2.8,2))
+xticks = np.append(np.linspace(0.6,2,6), np.linspace(2.3,2.8,2))
 xticks = np.round(xticks,2)
 plt.xticks(xticks, labels=np.round(xticks,2))
 
@@ -105,6 +105,7 @@ for a in [ax1, ax2]:
         legobj.set_linewidth(3.0)
 
 plt.subplots_adjust(hspace=0.3)
+plt.minorticks_off()
 
 plt.savefig('../figures/transmission_spectrum_all.pdf', dpi=300, rasterize=True,
             bbox_inches='tight')
