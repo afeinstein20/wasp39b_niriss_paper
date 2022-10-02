@@ -111,7 +111,7 @@ for col in cols3:
 # sets all the limits properly
 for a in [ax2, ax3]:
     a.set_ylim(-28, -20)
-    a.set_xlim(0.6,2.8)
+    a.set_xlim(0.6,2.86)
     a.set_yticks([-28, -25, -22])
 
 # creates the three legends in the plot
