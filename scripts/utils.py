@@ -1,9 +1,11 @@
 import numpy as np
 from astropy.table import Table
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+
 
 __all__ = ['load_plt_params', 'load_parula', 'pipeline_dictionary',
-           'convolve_model', 'convolve_model_xy']
+           'convolve_model', 'convolve_model_xy', 'truncate_colormap']
 
 def load_plt_params():
     """ Load in plt.rcParams and set (based on paper defaults).
@@ -57,3 +59,9 @@ def convolve_model_xy(y, R=300):
     yker /= yker.sum()
     model_to_plot=np.convolve(y,yker,mode='same') #convolving
     return model_to_plot
+
+def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
+    new_cmap = colors.LinearSegmentedColormap.from_list('trunc({n},{a:.2f},{b:.2f})'.format(n=cmap.name,
+                                                                                            a=minval,
+                                                                                            b=maxval),cmap(np.linspace(minval, maxval, n)))
+    return new_cmap
