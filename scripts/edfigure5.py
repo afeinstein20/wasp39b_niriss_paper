@@ -93,7 +93,8 @@ xticks = np.round(xticks,2)
 plt.xticks(xticks, labels=np.round(xticks,2))
 
 # Sets the y-limit
-plt.ylim(1.98,2.32)
+plt.ylim(2.02,2.25)
+plt.yticks(np.arange(2.05,2.3,0.05))
 
 # Creates the legends for each subplot
 for a in [ax1, ax2]:

@@ -1,4 +1,4 @@
-# PLOTS THE CONTRIBUTIONS TO THE MODEL
+# PLOTS THE C/O AND METALLICITY GRIDS
 
 import os, sys
 import pickle

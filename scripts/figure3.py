@@ -1,4 +1,4 @@
-# PLOTS THE C/O AND METALLICITY MODELS
+# PLOTS THE CONTRIBUTION PLOTS
 
 import os, sys
 import pickle
@@ -13,10 +13,12 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.colors import LinearSegmentedColormap
 
-from utils import load_plt_params, convolve_model, convolve_model_xy
+from utils import (load_plt_params, convolve_model, convolve_model_xy,
+                   load_parula)
 
 # set the matplotlib parameters
 load_plt_params()
+parula = load_parula()
 
 data = Table.read('../data/ts/CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.csv',
                   format='csv', comment='#')
@@ -54,15 +56,18 @@ ax1.errorbar(data['wave'], data['dppm']/1e6,
 
 
 # plot the models lacking certain molecules / clouds
-c=['#2354a3', '#2ab4cc',  '#f0832a', '#a12000', '#70c433','#7630c7']
 zorder=[2,3,4,10,5,6]
+c = [0, 0, 50, 160, 205, 240]
+style = ['-',':','-','-','-','-']
+lw=np.full(6, 3)
+lw[1] = 4.5
 labels=['no clouds', 'no inhomogeneous clouds', 'no CO', r'no CO$_2$',
         r'no H$_2$O',  'no K']
 for i,m in enumerate(no_models):
     label=m.split('_')[-1]
     x, y = convolve_model(os.path.join(no_path,m))
-    ax1.plot(x[cutends:-cutends], y[cutends:-cutends], c=c[i],#parula[c],
-             label=labels[i], lw=4, zorder=zorder[i])
+    ax1.plot(x[cutends:-cutends], y[cutends:-cutends], c=parula[c[i]],
+             label=labels[i], lw=lw[i], zorder=zorder[i], linestyle=style[i])
 
 # convolve the model reference and plot
 x, y = convolve_model('../data/contributions/models/model_reference.txt')
