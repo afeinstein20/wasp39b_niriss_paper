@@ -117,11 +117,12 @@ rect = Rectangle((x1, y2), x2-x1, y1-y2, facecolor='none', edgecolor='k')
 ax2.add_patch(rect)
 
 ax2.plot(np.linspace(x1, 205, 10), np.linspace(110, 222, 10), lw=1, color='k')
-ax2.plot(np.linspace(x2-x1, 1175, 10), np.linspace(110, 222, 10), lw=1, color='k')
+ax2.plot(np.linspace(x2-x1, 1175, 10), np.linspace(110, 222, 10), lw=1,
+         color='k')
 
 # Add text labeling the subplots
-ax1.text(s='(a) Order 1', x=50, y=30)
-ax2.text(s='(b) Order 2', x=1550, y=105)
+ax1.text(s='(a) order 1', x=50, y=30)
+ax2.text(s='(b) order 2', x=1550, y=105)
 
 # Set the x and y limits for each subplot
 ax2.set_ylim(256,80)
@@ -130,5 +131,5 @@ ax1.set_xlim(0,2048)
 
 ax2.set_ylabel('y pixel position', y=1.01, fontsize=24)
 ax2.set_xlabel('x pixel position', fontsize=24)
-plt.savefig('../figures/traces.png',
+plt.savefig('../figures/traces.pdf',
             rasterize=True, bbox_inches='tight', dpi=250)
