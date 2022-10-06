@@ -6,7 +6,7 @@ import numpy as np
 from astropy.table import Table
 import matplotlib.pyplot as plt
 
-from utils import pipeline_dictionary, load_plt_params
+from utils import pipeline_dictionary, load_plt_params, convolve_model
 
 # set the matplotlib parameters
 load_plt_params()
@@ -14,10 +14,19 @@ load_plt_params()
 # Load in colors and filenames
 pipeline_dict = pipeline_dictionary()
 
+# set the reference model file
+ref_file = '../data/Main_Models/model_reference.txt'
+ref = convolve_model(ref_file)
+
 # Creates the figure environment
 fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(16,10),
                                sharex=True, sharey=True)
 fig.set_facecolor('w')
+
+cutends = 15
+for a in [ax1, ax2]:
+    a.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends]*1e2,
+            lw=2,c='k', zorder=100)
 
 # Defines the order for which pipelines will be plotted
 pipelineorder = ['CMADF', 'NE', 'AT', 'MCR', 'ZR', 'LPC']
@@ -63,7 +72,7 @@ for i in range(len(pipelineorder)):
 
         a.errorbar(tab['wave'][q], tab['dppm'][q]/1e4,
                    markeredgecolor='w', color=color,
-                   ecolor=color, markeredgewidth=1, alpha=1,
+                   ecolor=color, markeredgewidth=0.5, alpha=1,
                    linestyle='', marker=shapes[i], ms=ms, zorder=10)
 
 
@@ -77,7 +86,7 @@ for i in range(len(pipelineorder)):
                      ecolor=color,
                      linestyle='', marker=shapes[i],
                      label=pipeline_dict[pipelineorder[i]]['name'],
-                     ms=12, lw=4, markeredgewidth=2)
+                     ms=12, lw=4, markeredgewidth=1)
 
 
 # Sets the x and y labels

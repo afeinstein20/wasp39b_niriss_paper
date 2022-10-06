@@ -5,7 +5,8 @@ import matplotlib.colors as colors
 
 
 __all__ = ['load_plt_params', 'load_parula', 'pipeline_dictionary',
-           'convolve_model', 'convolve_model_xy', 'truncate_colormap']
+           'convolve_model', 'convolve_model_xy', 'truncate_colormap',
+           'avg_lightcurves', 'get_MAD_sigma']
 
 def load_plt_params():
     """ Load in plt.rcParams and set (based on paper defaults).
@@ -65,3 +66,55 @@ def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
                                                                                             a=minval,
                                                                                             b=maxval),cmap(np.linspace(minval, maxval, n)))
     return new_cmap
+
+def avg_lightcurves(index, data, err, per=5):
+    """
+    Creates averaged spectroscopic light curves across 'per' number of
+    channels.
+    """
+    global idx_oot
+
+    flux  = np.zeros((per*2+1, len(data['time'])))
+    model = np.zeros((per*2+1, len(data['time'])))
+    error = np.zeros((per*2+1, len(data['time'])))
+    fnorm = np.zeros((per*2+1, len(data['time'])))
+    wrange = np.zeros(per*2+1)
+
+    for j in range(i-per, i+per+1):
+        flux[j-(i-per)]  = data['lc_w{}'.format(j)]
+        model[j-(i-per)] = data['combined_model_w{}'.format(i)]
+
+        eind = np.where(err[1] <=
+                        data['w{}'.format(j)][0].value)[0][0]
+
+        error[j-(i-per)] = err[3][:,eind]
+        fnorm[j-(i-per)] = err[2][:,eind]
+        wrange[j-(i-per)] = data['w{}'.format(j)][0].value
+
+    wrange = np.sort(wrange)
+    wmed = wrange[5]
+    low,upp = wrange[5]-wrange[0], wrange[-1]-wrange[5]
+    lim = np.round(np.nanmedian([low,upp]),3)
+
+    e = (np.sqrt(np.nansum(error,axis=0))/len(error))/np.nanmax(fnorm)
+    f = np.nanmean(flux, axis=0)
+    m = np.nanmean(model, axis=0)
+
+    f /= np.nanmedian(f[idx_oot])
+    m /= np.nanmedian(m[idx_oot])
+
+    return f, e, m, wmed, lim
+
+def get_MAD_sigma(x, median):
+    """
+    Wrapper function for transitspectroscopy.utils.get_MAD_sigma to estimate
+    the noise properties of the light curves.
+
+    Parameters
+    ----------
+    x : np.ndarray
+    median : np.ndarray
+    """
+    mad = np.nanmedian( np.abs ( x - median ) )
+
+    return 1.4826*mad
