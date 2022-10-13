@@ -17,6 +17,7 @@ spoon = np.load(os.path.join(path, 'supremespoon_spectra.npy'))
 ts = np.load(os.path.join(path, 'transitspectroscopy_spectra.npy'),
              allow_pickle=True)
 iraclis  = np.load(os.path.join(path, 'iraclis_spectra.npy'), allow_pickle=True)
+nameless = np.load(os.path.join(path, 'nameless_spectra.npy'), allow_pickle=True)
 
 
 fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(14,8))
@@ -26,13 +27,14 @@ axins1 = ax1.inset_axes([0.55, 0.4, 0.42, 0.5])
 axins2 = ax2.inset_axes([0.55, 0.4, 0.42, 0.5])
 
 kwargs={'linewidth':2}
-labels = ['nirHiss', 'supreme-SPOON', 'transitspectroscopy', 'iraclis']
-initials = ['ADF', 'MCR', 'NE', 'AT']
-scaling1 = [1, 72, 1.065, 1.15]
-scaling2 = [1, 72, 1.09, 2.55]
+labels = ['nirHiss', 'supreme-SPOON', 'transitspectroscopy', 'iraclis',
+          'NAMELESS']
+initials = ['ADF', 'MCR', 'NE', 'AT', 'LPC']
+scaling1 = [1, 72, 1.065, 1.15, 1.07]
+scaling2 = [1, 72, 1.09, 2.55, 1.09]
 
 for ax in [ax1, axins1]:
-    for i, data in enumerate([nirhiss, spoon, ts, iraclis]):
+    for i, data in enumerate([nirhiss, spoon, ts, iraclis, nameless]):
         ax.plot(data[0], data[1]/scaling1[i],
                 color=color_dict[initials[i]]['color'],
                 zorder=100,
@@ -68,7 +70,7 @@ ax1.text(s='(a)', x=0.87, y=7300)
 ax2.text(s='(b)', x=0.567, y=3200)
 
 leg = ax1.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-                 ncol=4, mode="expand", borderaxespad=0., fontsize=16)
+                 ncol=3, mode="expand", borderaxespad=0., fontsize=16)
 
 for legobj in leg.legendHandles:
     legobj.set_linewidth(6.0)

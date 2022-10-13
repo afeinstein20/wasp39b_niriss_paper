@@ -1,4 +1,6 @@
 # PLOTS THE STACKED SPECTROSCOPIC LIGHT CURVES
+import numpy as np
+import matplotlib.pyplot as plt
 
 from utils import load_plt_params, load_parula, avg_lightcurves, get_MAD_sigma
 
@@ -53,7 +55,8 @@ text_kwargs = {'color':'k', 'zorder':20, 'fontsize':15,
 ###
 inds = np.linspace(368,880,n,dtype=int)
 for i in inds:
-    flux, err, model, wmed, wlim = avg_lightcurves(i, data2, err2, per=per)
+    flux, err, model, wmed, wlim = avg_lightcurves(i, data2, err2, idx_oot,
+                                                   per=per)
     rms = get_MAD_sigma(np.median(np.abs(flux-model)[idx_oot] - 1.),
                                   np.abs(flux-model)[idx_oot] - 1.)*1e6
 
@@ -90,7 +93,8 @@ for i in inds:
 ###
 inds = np.linspace(20,2012-20*2,n,dtype=int)
 for i in inds:
-    flux, err, model, wmed, wlim = avg_lightcurves(i, data1, err1, per=per)
+    flux, err, model, wmed, wlim = avg_lightcurves(i, data1, err1, idx_oot,
+                                                   per=per)
     rms = get_MAD_sigma(np.median(np.abs(flux-model)[idx_oot] - 1.),
                                   np.abs(flux-model)[idx_oot] - 1.)*1e6
 

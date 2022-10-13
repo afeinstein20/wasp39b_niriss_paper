@@ -67,12 +67,11 @@ def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
                                                                                             b=maxval),cmap(np.linspace(minval, maxval, n)))
     return new_cmap
 
-def avg_lightcurves(index, data, err, per=5):
+def avg_lightcurves(i, data, err, idx_oot, per=5):
     """
     Creates averaged spectroscopic light curves across 'per' number of
     channels.
     """
-    global idx_oot
 
     flux  = np.zeros((per*2+1, len(data['time'])))
     model = np.zeros((per*2+1, len(data['time'])))
