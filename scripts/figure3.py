@@ -128,7 +128,7 @@ for legobj in leg.legendHandles:
 
 for a in [ax2, ax3]:
     leg = a.legend(ncol=5, borderaxespad=0.0,
-                   fontsize=16, loc=2)
+                   fontsize=16, loc="upper center")
     for legobj in leg.legendHandles:
         legobj.set_linewidth(6.0)
 
@@ -157,6 +157,10 @@ ax1.set_yticks(yticks)
 labels = np.round(yticks*100,2)
 labels = [format(i, '.2f') for i in labels]
 ax1.set_yticklabels(labels)
+
+# add subplot labels
+ax1.text(s='(a)', x=0.61, y=0.0223, fontsize=20)
+ax2.text(s='(b)', x=0.61, y=-21.9, fontsize=20)
 
 plt.savefig('../figures/contribution.pdf', dpi=250, rasterize=True,
             bbox_inches='tight')
