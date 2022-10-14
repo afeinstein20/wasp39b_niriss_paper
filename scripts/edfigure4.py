@@ -74,7 +74,7 @@ for x in range(len(names)):
 
 
     kwargs = {'color':pipeline_dict[names[x]]['color'], 'linestyle':'',
-              'marker':'.', 'markersize':12}
+              'marker':'.', 'markersize':8}
 
     axes[0][0].errorbar(data[0], data[1]/np.nanmedian(data[1])-np.nansum(offset_lc[:x]),
                        yerr=data[2], **kwargs)
@@ -119,7 +119,7 @@ for x in [0, 1, 3, 4]:
         factor=1e6
 
     kwargs = {'color':pipeline_dict[names[x]]['color'], 'linestyle':'',
-              'marker':'.', 'markersize':12}
+              'marker':'.', 'markersize':8}
 
     axes[1][0].errorbar(data[0], data[1]/np.nanmedian(data[1])-np.nansum(offset_lc[:y]),
                        yerr=data[2], **kwargs)
