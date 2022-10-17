@@ -19,22 +19,22 @@ ref_file = '../data/Main_Models/model_reference.txt'
 ref = convolve_model(ref_file)
 
 # Creates the figure environment
-fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(16,10),
-                               sharex=True, sharey=True)
+fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, figsize=(16,10),
+                                    sharex=True, sharey=True)
 fig.set_facecolor('w')
 
 cutends = 15
-for a in [ax1, ax2]:
+for a in [ax1, ax2, ax3]:
     a.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends]*1e2,
             lw=2,c='k', zorder=100)
 
 # Defines the order for which pipelines will be plotted
-pipelineorder = ['CMADF', 'NE', 'AT', 'MCR', 'ZR', 'LPC']
+pipelineorder = ['CMADF', 'ZR', 'NE', 'AT',  'MCR', 'LPC']
 
 # Set alpha value, zorder, and marker shape for each plotted spectrum
 alpha = np.full(len(pipelineorder), 0.6)
 zorder = [5, 4, 3, 5, 4 , 3]
-shapes = ['o', 's', '^', 'o', 's', '^',]
+shapes = ['o', '^', 'o', '^', 'o', '^']
 
 for i in range(len(pipelineorder)):
     fn = pipeline_dict[pipelineorder[i]]['filename']
@@ -52,10 +52,12 @@ for i in range(len(pipelineorder)):
             q = tab['wave'] > 0.87
             label=label
 
-        if i < 3:
+        if i < 2:
             a = ax1
-        else:
+        elif i >= 2 and i < 4:
             a = ax2
+        else:
+            a = ax3
 
         if shapes[i] == '^':
             ms = 10
@@ -68,15 +70,15 @@ for i in range(len(pipelineorder)):
                    markeredgecolor='w', color=color,
                    ecolor=color,
                    linestyle='', marker=shapes[i], ms=ms,
-                   alpha=alpha[i], markeredgewidth=1)
+                   alpha=0.5, markeredgewidth=0.3)
 
         a.errorbar(tab['wave'][q], tab['dppm'][q]/1e4,
                    markeredgecolor='w', color=color,
-                   ecolor=color, markeredgewidth=0.5, alpha=1,
+                   ecolor=color, markeredgewidth=0.3, alpha=1,
                    linestyle='', marker=shapes[i], ms=ms, zorder=10)
 
 
-axes = [ax1, ax1, ax1, ax2, ax2, ax2]
+axes = [ax1, ax1, ax2, ax2, ax3, ax3]
 for i in range(len(pipelineorder)):
     color = pipeline_dict[pipelineorder[i]]['color']
     axes[i].errorbar(tab['wave'][q], tab['dppm'][q]/1000,
@@ -91,8 +93,10 @@ for i in range(len(pipelineorder)):
 
 # Sets the x and y labels
 plt.xlabel('wavelength [$\mu$m]')
-ax1.set_ylabel('transit depth [%]')
+#ax1.set_ylabel('transit depth [%]')
 ax2.set_ylabel('transit depth [%]')
+#ax3.set_ylabel('transit depth [%]')
+
 
 # Sets the x-limit, x-scale, and x-ticks
 plt.xscale('log')
@@ -106,15 +110,15 @@ plt.ylim(2.02,2.25)
 plt.yticks(np.arange(2.05,2.3,0.05))
 
 # Creates the legends for each subplot
-for a in [ax1, ax2]:
-    leg = a.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-                     ncol=4, mode="expand", borderaxespad=0.,
-                     fontsize=20)
+for a in [ax1, ax2, ax3]:
+    leg = a.legend(loc="upper left",
+                     ncol=2, #mode="expand", borderaxespad=0.,
+                     fontsize=18)
 
     for legobj in leg.legendHandles:
         legobj.set_linewidth(3.0)
 
-plt.subplots_adjust(hspace=0.3)
+plt.subplots_adjust(hspace=0.1)
 plt.minorticks_off()
 
 plt.savefig('../figures/transmission_spectrum_all.pdf', dpi=300, rasterize=True,

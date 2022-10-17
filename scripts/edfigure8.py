@@ -17,9 +17,9 @@ load_plt_params()
 parula = load_parula()
 
 # grabs files in [K/O] directory
-path = '../data/model_rule_out_ko/'
+path = '../data/ko_short_lam/'
 models = np.sort([os.path.join(path, i) for i in os.listdir(path) if
-                  i.endswith('.txt') and 'ko' in i])
+                  i.endswith('.txt')])
 
 # grabs reference model and the full-resolution transmission spectrum
 ref_file = '../data/Main_Models/model_reference.txt'
@@ -33,8 +33,16 @@ dat = np.loadtxt('../data/model_rule_out_ko/WASP39b_niriss.txt')
 full = np.loadtxt('../data/model_rule_out_ko/WASP39b_niriss.txt')
 
 # pre-computed [K/O] chi^2/N values
-ko_labels = np.append(np.array([-1,-0.5]), np.arange(0,1.1,0.1))
-ko_chi2 = [1.30,1.25,1.18,1.13,1.19,1.30,1.45,1.59,1.75,1.87,2.06,2.24,2.42]
+ko_labels = np.array([])
+ko_chi2 = np.array([])
+for i in range(len(models)):
+    fn = models[i].split('/')[-1]
+    each = fn.split('_')
+    ko_labels = np.append(ko_labels, float(each[0]))
+    ko_chi2 = np.append(ko_chi2, float(each[3].split('t')[0][:-1]))
+argsort = np.argsort(ko_labels)
+ko_labels = ko_labels[argsort]
+ko_chi2 = ko_chi2[argsort]
 
 # converts chi^2/N --> p-value --> sigma
 p_value = 1 - stats.chi2.cdf(np.array(ko_chi2)*len(dat[:,0]), len(dat[:,0])-1)
@@ -42,8 +50,8 @@ sigma = np.sqrt(2)*erfcinv(p_value)
 
 # defines the color map and scaling for the sigma-values
 CMAP = plt.get_cmap('Oranges_r')
-new_cmap= truncate_colormap(CMAP , 0.1, 1.5)
-chi_arr=np.arange(1.0,1.3,0.001)
+new_cmap= truncate_colormap(CMAP , 0.1, 2.0)
+chi_arr=np.arange(1.3, 3.3, 0.001)
 cNorm  = colors.Normalize(vmin=0, vmax=len(chi_arr))
 scalarMap = cm.ScalarMappable(norm=cNorm, cmap=new_cmap)
 
@@ -77,12 +85,6 @@ ax.errorbar(full[:,0], full[:,2],
          markeredgecolor='#c7c3c0',
          ecolor='#c7c3c0',
          color='#c7c3c0', zorder=0, label='instrument resolution')
-
-# convolves the reference model to R=300 and plots (black line)
-ref = convolve_model(ref_file)
-ax.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends],
-        label='ref. (0.1)', lw=3,
-        c='k', zorder=30, alpha=1)
 
 
 inds = np.linspace(0,200,len(models),dtype=int)
@@ -149,7 +151,7 @@ ax.set_yticks(yticks)
 labels = np.round(yticks*100,2)
 labels = [format(i, '.2f') for i in labels]
 ax.set_yticklabels(labels)
-ax.set_ylim(0.0205,0.022)
+ax.set_ylim(0.0205,0.02215)
 
 # really hacky colorbar
 cax.imshow(np.full((30,300), np.linspace(np.nanmin(sigma),np.nanmax(sigma),300)),
@@ -159,7 +161,7 @@ sort = np.argsort(idx_y)
 fit = interp1d(np.linspace(np.nanmin(sigma),np.nanmax(sigma),300),
                np.arange(0,300,1))
 # sets the ticks for the colorbar
-ticks = np.arange(1.5, 6.5, 1.0)
+ticks = np.arange(2, 10, 2.0)
 cax.set_xticks(fit(ticks))
 cax.set_xticklabels(np.round(ticks,2))
 cax.set_yticks([])
