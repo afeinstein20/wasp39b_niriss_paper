@@ -23,11 +23,11 @@ hst_err = np.sqrt(2) * hst['Rp/R*'] * hst['Rp/R* error'] * 100 # propagates err
 # Plots the HST data
 plt.errorbar(hst['Wavelength microns'],
              hst['Rp/R*']**2*100,
-             yerr=hst_err,
+             yerr=hst_err*np.sqrt(2),
              xerr=hst['Wavelength bin size microns'],
-             marker='o', linestyle='', ms=8,
+             marker='o', linestyle='', ms=7,
              markeredgecolor='#404040', ecolor='#404040',
-             color='w', lw=2,
+             color='w', lw=2.5,markeredgewidth=1.5,
              zorder=100, label='HST (Wakeford+2018)')
 
 # Load in colors and filenames
