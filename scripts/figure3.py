@@ -27,7 +27,7 @@ xsections = Table.read('../data/contributions/xsecs/xsections.txt', format='asci
                        comment='#') # units in m^2
 
 no_path = '../data/contributions/models'
-no_models = ['model_xClouds.txt', 'model_xInhClouds.txt',
+no_models = ['model_xClouds.txt',
              'model_xCO.txt', 'model_xCO2.txt', 'model_xH2O.txt',
              'model_xK.txt']
 
@@ -46,28 +46,26 @@ ax2 = fig.add_subplot(gs01[0, 0])
 ax3 = fig.add_subplot(gs01[1, 0])
 
 # plot the data
+dcolor = '#5c5a58'
 ax1.errorbar(data['wave'], data['dppm']/1e6,
              xerr=data['wave_error'],
              yerr=data['dppm_err']/1e6,
              linestyle='', marker='o',
-             markeredgecolor='#b0acaa',
-             ecolor='#b0acaa',
+             markeredgecolor=dcolor,
+             ecolor=dcolor,
              color='w', zorder=1)
 
 
 # plot the models lacking certain molecules / clouds
 zorder=[2,3,4,10,5,6]
-c = [0, 0, 50, 160, 205, 240]
-style = ['-',':','-','-','-','-']
-lw=np.full(6, 3)
-lw[1] = 4.5
-labels=['no clouds', 'no inhomogeneous clouds', 'no CO', r'no CO$_2$',
+c = [0, 50, 160, 205, 240]
+labels=['no clouds', 'no CO', r'no CO$_2$',
         r'no H$_2$O',  'no K']
 for i,m in enumerate(no_models):
     label=m.split('_')[-1]
     x, y = convolve_model(os.path.join(no_path,m))
     ax1.plot(x[cutends:-cutends], y[cutends:-cutends], c=parula[c[i]],
-             label=labels[i], lw=lw[i], zorder=zorder[i], linestyle=style[i])
+             label=labels[i], lw=3, zorder=zorder[i])
 
 # convolve the model reference and plot
 x, y = convolve_model('../data/contributions/models/model_reference.txt')
@@ -121,7 +119,7 @@ for a in [ax2, ax3]:
 
 # creates the three legends in the plot
 leg = ax1.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-                 ncol=4, mode="expand", borderaxespad=0.,
+                 ncol=3, mode="expand", borderaxespad=0.,
                  fontsize=16)
 for legobj in leg.legendHandles:
     legobj.set_linewidth(6.0)
