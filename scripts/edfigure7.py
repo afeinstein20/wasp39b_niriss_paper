@@ -45,8 +45,8 @@ fullmodels = [os.path.join('../data/Main_Models/', i) for i in
 cdict = {}
 corder = [210, 0, 52, 105, 157]
 names = ['gray [2.96 / 2.89]',
-         'inhomogeneous A&M [2.59 / 2.79]',
-         'A&M [2.70 / 2.91]',
+         'inhomogeneous flux-balanced [2.59 / 2.79]',
+         'flux-balanced [2.70 / 2.91]',
          'power law [2.83 / 2.87]',
          'inhomogeneous power law [2.83 / 2.88]']
 
