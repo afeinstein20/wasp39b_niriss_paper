@@ -18,6 +18,7 @@ ts = np.load(os.path.join(path, 'transitspectroscopy_spectra.npy'),
              allow_pickle=True)
 iraclis  = np.load(os.path.join(path, 'iraclis_spectra.npy'), allow_pickle=True)
 nameless = np.load(os.path.join(path, 'nameless_spectra.npy'), allow_pickle=True)
+firefly = np.load(os.path.join(path, 'firefly_spectra.npy'), allow_pickle=True)
 
 
 fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(14,8))
@@ -26,19 +27,24 @@ fig.set_facecolor('w')
 axins1 = ax1.inset_axes([0.55, 0.4, 0.42, 0.5])
 axins2 = ax2.inset_axes([0.55, 0.4, 0.42, 0.5])
 
-kwargs={'linewidth':2}
+kwargs={'linewidth':2, 'alpha':0.7}
 labels = ['nirHiss', 'supreme-SPOON', 'transitspectroscopy', 'iraclis',
-          'NAMELESS']
-initials = ['ADF', 'MCR', 'NE', 'AT', 'LPC']
-scaling1 = [1, 72, 1.065, 1.15, 1.07]
-scaling2 = [1, 72, 1.09, 2.55, 1.09]
+          'NAMELESS', 'FIREFly']
+initials = ['ADF', 'MCR', 'NE', 'AT', 'LPC', 'ZR']
+scaling1 = [1, 72, 1.065, 1.15, 1.07, 1.04]
+scaling2 = [1, 72, 1.09, 2.55, 1.09, 1]
+zorder = np.flip(np.arange(0,7,1))
 
 for ax in [ax1, axins1]:
-    for i, data in enumerate([nirhiss, spoon, ts, iraclis, nameless]):
+    for i, data in enumerate([nirhiss, spoon, ts, iraclis, nameless, firefly]):
         ax.plot(data[0], data[1]/scaling1[i],
                 color=color_dict[initials[i]]['color'],
-                zorder=100,
-                label=labels[i], **kwargs)
+                zorder=zorder[i],
+                **kwargs)
+        ax.plot(data[0], data[1]*1000,
+                color=color_dict[initials[i]]['color'],
+                zorder=zorder[i],
+                label=labels[i])
 
 for ax in [ax2, axins2]:
     for i, data in enumerate([nirhiss, spoon, ts, iraclis]):
