@@ -86,7 +86,7 @@ for i in range(len(pipelineorder)):
 
 # Label some of the obvious features
 lcolor = '#8a8988'
-plt.text(s='K', color=lcolor, x=0.76, y=2.205)
+plt.text(s='K', color=lcolor, x=0.76, y=2.213)
 x = [0.91, 1.115, 1.38, 1.81]
 rmin = [0.03, 0.04, 0.09, 0.08]
 rmax = [0.1, 0.13, 0.21, 0.24]
@@ -96,9 +96,9 @@ for i in range(len(x)):
 
 # Creates the dividing 'Order 1/Order 2' vertical line and text
 plt.axvline(0.855, color='#404040', zorder=1, alpha=0.4, lw=3)
-plt.text(s='Order 2', x=0.74, y=2.23)
+plt.text(s='order 2', x=0.74, y=2.23)
 plt.arrow(0.73, 2.234, -0.06, 0., head_width=0.01, head_length=0.01, fc='k', ec='k')
-plt.text(s='Order 1', x=0.87, y=2.23)
+plt.text(s='order 1', x=0.87, y=2.23)
 plt.arrow(1.0, 2.234, 0.08, 0., head_width=0.01, head_length=0.015, fc='k', ec='k')
 
 # Sets the x and y labels
