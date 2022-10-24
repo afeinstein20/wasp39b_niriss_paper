@@ -85,6 +85,9 @@ for i in inds:
                  linestyle='', marker='.',
                  color=temp_colors[c], alpha=alpha)
 
+    # adds horizontal line to residuals
+    ax2.axhline(-offset*o, color=temp_colors[c], zorder=0, lw=2)
+
     o += 1
     c += 1
 
@@ -122,6 +125,9 @@ for i in inds:
                  yerr=err,
                  linestyle='', marker='.',
                  color=temp_colors[c], alpha=0.3)
+
+    # adds horizontal line to residuals
+    ax2.axhline(-offset*o-add_offset, color=temp_colors[c], zorder=0, lw=2)
 
     o += 1
     c += 1
