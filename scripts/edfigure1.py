@@ -23,7 +23,13 @@ load_plt_params()
 pipeline_dict = pipeline_dictionary()
 
 # Create the figure environment
-fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(10,8), sharex=True)
+fig, ((ax1, ax3), (ax2, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(15,8), #sharex=True,
+                                             gridspec_kw={'width_ratios':[2,0.5]})
+
+ax3.yaxis.tick_right()
+ax4.yaxis.tick_right()
+ax4.yaxis.set_label_position("right")
+
 fig.set_facecolor('w')
 
 # Load in the median frame to plot as the background
@@ -50,14 +56,14 @@ for i, ax in enumerate([ax1, ax2, axins1, axins2]):
         cax = divider.append_axes('right', size='3%', pad=0.05)
         cbar = fig.colorbar(im, cax=cax, orientation='vertical')
         if i == 0:
-            labels = [10,50,100,200,400,600]
+            labels = [10,50,100,300,600]
         else:
             labels = [10,20,50,80,120]
 
         ticks = np.log10(labels)
         cbar.set_ticks(ticks)
         cbar.set_ticklabels(labels)
-        cbar.set_label('DN / s')
+        cax.set_title('DN s$^{-1}$', fontsize=18, x=1.6)
 
 labels=['nirHiss', 'supreme-SPOON', 'NAMELESS', 'transitspectroscopy','iraclis']
 x = 0
@@ -116,20 +122,43 @@ axins2.set_ylim(y1, y2)
 rect = Rectangle((x1, y2), x2-x1, y1-y2, facecolor='none', edgecolor='k')
 ax2.add_patch(rect)
 
-ax2.plot(np.linspace(x1, 205, 10), np.linspace(110, 222, 10), lw=1, color='k')
-ax2.plot(np.linspace(x2-x1, 1175, 10), np.linspace(110, 222, 10), lw=1,
+ax2.plot(np.linspace(x1, 205, 10), np.linspace(110, 218, 10), lw=1, color='k')
+ax2.plot(np.linspace(x2-x1, 1173, 10), np.linspace(110, 216, 10), lw=1,
          color='k')
+
+# Add ax3 profile
+ax3.plot(img[:,1250], np.arange(0,256,1), color='k', lw=2)
+ax3.set_ylim(90,20)
+
+# Add ax4 profile
+ax4.plot(img[:,1250], np.arange(0,256,1), color='k', lw=2)
+ax4.set_ylim(250,80)
+
+for a in [ax3, ax4]:
+    a.set_xlim(0,220)
+    a.set_xticks([0, 100, 200])
+ax3.set_xticklabels([])
+ax4.set_xlabel('DN s$^{-1}$')
 
 # Add text labeling the subplots
 ax1.text(s='(a) order 1', x=50, y=30)
-ax2.text(s='(b) order 2', x=1550, y=105)
+ax2.text(s='(c) order 2', x=1550, y=105)
+
+ax3.text(s='(b)', x=10, y=85)
+ax4.text(s='(d)', x=10, y=240)
 
 # Set the x and y limits for each subplot
-ax2.set_ylim(256,80)
+ax2.set_ylim(250,80)
 ax1.set_ylim(90, 20)
 ax1.set_xlim(0,2048)
+ax1.set_xticklabels([])
 
 ax2.set_ylabel('y pixel position', y=1.01, fontsize=24)
+ax4.set_ylabel('y pixel position', y=1.01, fontsize=24)
 ax2.set_xlabel('x pixel position', fontsize=24)
+
+plt.subplots_adjust(wspace=0.2)
+
+
 plt.savefig('../figures/traces.pdf',
             rasterize=True, bbox_inches='tight', dpi=250)
