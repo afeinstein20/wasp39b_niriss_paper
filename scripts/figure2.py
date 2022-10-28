@@ -25,9 +25,9 @@ plt.errorbar(hst['Wavelength microns'],
              hst['Rp/R*']**2*100,
              yerr=hst_err*np.sqrt(2),
              xerr=hst['Wavelength bin size microns'],
-             marker='o', linestyle='', ms=7,
+             marker='o', linestyle='', ms=6,
              markeredgecolor='#404040', ecolor='#404040',
-             color='w', lw=2.5,markeredgewidth=1.5,
+             color='w', lw=1.5,markeredgewidth=1.,
              zorder=100, label='HST (Wakeford+2018)')
 
 # Load in colors and filenames
