@@ -16,7 +16,7 @@ obs = Table.read('../data/ts/CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.cs
 plt.rcParams["text.usetex"]=False
 
 modelname = ['PICASO: ','ATMO: ','Phoenix: ']
-bestparam  = [r'[M/H]=1.7, C/O=0.275, $\chi^2/N_{\rm obs}=$2.98', #PICASO
+bestparam  = [r'[M/H]=1.7, C/O=0.229, $\chi^2/N_{\rm obs}=$2.98', #PICASO
               r'[M/H]=1.0, C/O=0.35, $\chi^2/N_{\rm obs}=$3.24',  #ATMO
               r'[M/H]=2.0, C/O=0.389, $\chi^2/N_{\rm obs}=$3.51'  #Phoenix
              ]
@@ -69,7 +69,7 @@ ax1.plot(lmd_Phoenix,dppm_Phoenix*1e-4,
 
 
 # plotting best-fit clear models
-bestparam_clear  = [r'[M/H]=2.0, C/O=0.825, $\chi^2/N_{\rm obs}=$7.02', #PICASO
+bestparam_clear  = [r'[M/H]=2.0, C/O=0.687, $\chi^2/N_{\rm obs}=$7.02', #PICASO
                     r'[M/H]=2.0, C/O=0.35, $\chi^2/N_{\rm obs}=$4.11',  #ATMO
                     r'[M/H]=2.0, C/O=0.899, $\chi^2/N_{\rm obs}=$8.55'  #Phoenix
                    ]
