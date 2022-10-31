@@ -45,10 +45,10 @@ fullmodels = [os.path.join('../data/Main_Models/', i) for i in
 cdict = {}
 corder = [210, 0, 52, 105, 157]
 names = ['gray [2.96 / 2.89]',
-         'inhomogeneous flux-balanced [2.59 / 2.79]',
-         'flux-balanced [2.70 / 2.91]',
-         'power law [2.83 / 2.87]',
-         'inhomogeneous power law [2.83 / 2.88]']
+         'inhomogeneous droplet sedimentation [2.59 / 2.79]',
+         'droplet sedimentation [2.70 / 2.91]',
+         'gray + power-law [2.83 / 2.87]',
+         'inhomogeneous gray + power law [2.83 / 2.88]']
 
 for i, m in enumerate(['basic', 'inh_anm', 'anm_output', 'power_output',
                        'inh_power']):
@@ -157,7 +157,7 @@ ax.text(s=r'(b) $\lambda$ < 2.00 $\mu$m', x=0.61, y=0.0222)
 # creates the legend for both subplots
 leg = ax0.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
                  ncol=2, mode="expand", borderaxespad=0.,
-                 fontsize=16)
+                 fontsize=13)
 for legobj in leg.legendHandles:
     legobj.set_linewidth(5.0)
 

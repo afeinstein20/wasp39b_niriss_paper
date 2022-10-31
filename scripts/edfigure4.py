@@ -62,7 +62,7 @@ for x in range(len(names)):
     mad = get_MAD_sigma(np.median(data[1][idx_oot] - 1.),
                              data[1][idx_oot] - 1.)  * 1e6
 
-    axes[0][0].text(s='{} ppm'.format(np.round(mad)),
+    axes[0][0].text(s='{} ppm'.format(int(np.round(mad))),
                    x=-3.6, y=0.993-np.nansum(offset_lc[:x]),
                    color=pipeline_dict[names[x]]['color'],
                    fontsize=20., fontweight='bold')
@@ -106,7 +106,7 @@ for x in [0, 1, 3, 4]:
     else:
         y = x + 0
 
-    axes[1][0].text(s='{} ppm'.format(np.round(mad)),
+    axes[1][0].text(s='{} ppm'.format(int(np.round(mad))),
                    x=-3.6, y=0.993-np.nansum(offset_lc[:y]),
                    color=pipeline_dict[names[x]]['color'],
                    fontsize=20., fontweight='bold')
