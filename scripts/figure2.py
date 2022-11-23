@@ -87,9 +87,9 @@ for i in range(len(pipelineorder)):
 # Label some of the obvious features
 lcolor = '#8a8988'
 plt.text(s='K', color=lcolor, x=0.76, y=2.213)
-x = [0.91, 1.115, 1.38, 1.81]
-rmin = [0.03, 0.04, 0.09, 0.08]
-rmax = [0.1, 0.13, 0.21, 0.24]
+x = [0.91, 1.115, 1.38, 1.81, 2.62]
+rmin = [0.03, 0.04, 0.09, 0.08, 0.2]
+rmax = [0.1, 0.13, 0.21, 0.24, 0.1]
 for i in range(len(x)):
     plt.text(s=r'H$_2$O', x=x[i], y=2.07, color=lcolor, backgroundcolor='w')
     plt.hlines(y=2.075, xmin=x[i]-rmin[i], xmax=x[i]+rmax[i], color=lcolor, lw=2)
@@ -126,5 +126,5 @@ for legobj in leg.legendHandles:
 plt.minorticks_off()
 
 
-plt.savefig('../figures/transmission_spectrum.pdf', dpi=300, rasterize=True,
+plt.savefig('../figures/transmission_spectrum.jpg', dpi=300, rasterize=True,
             bbox_inches='tight')

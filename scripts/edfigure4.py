@@ -145,8 +145,8 @@ yticks = np.linspace(-0.006, 0, 4)
 axes[1][1].set_yticks(yticks)
 axes[1][1].set_yticklabels(np.flip(np.abs(yticks*1e6)))
 
-axes[0][0].text(s='(a)', x=-3.5, y=1.008)
-axes[0][1].text(s='(b)', x=-3.5, y=0.0008)
+axes[0][0].text(s='(a)', x=-3.5, y=1.008, fontweight='bold')
+axes[0][1].text(s='(b)', x=-3.5, y=0.0008, fontweight='bold')
 
 axes[1][0].set_xlabel('time from mid-transit [hrs]', fontsize=24, x=1.08)
 
@@ -170,5 +170,5 @@ for legobj in leg.legendHandles:
 ax_legend.set_axis_off()
 
 #plt.tight_layout()
-plt.savefig('../figures/stacked_white_light_curves.pdf',
+plt.savefig('../figures/stacked_white_light_curves.jpg',
             rasterize=True, bbox_inches='tight', dpi=250)

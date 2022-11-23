@@ -141,11 +141,11 @@ ax3.set_xticklabels([])
 ax4.set_xlabel('DN s$^{-1}$')
 
 # Add text labeling the subplots
-ax1.text(s='(a) order 1', x=50, y=30)
-ax2.text(s='(c) order 2', x=1550, y=105)
+ax1.text(s='(a) order 1', x=50, y=30, fontweight='bold')
+ax2.text(s='(c) order 2', x=1550, y=105, fontweight='bold')
 
-ax3.text(s='(b)', x=10, y=85)
-ax4.text(s='(d)', x=10, y=240)
+ax3.text(s='(b)', x=10, y=85, fontweight='bold')
+ax4.text(s='(d)', x=10, y=240, fontweight='bold')
 
 # Set the x and y limits for each subplot
 ax2.set_ylim(250,80)
@@ -160,5 +160,5 @@ ax2.set_xlabel('x pixel position', fontsize=24)
 plt.subplots_adjust(wspace=0.2)
 
 
-plt.savefig('../figures/traces.pdf',
+plt.savefig('../figures/traces.jpg',
             rasterize=True, bbox_inches='tight', dpi=250)

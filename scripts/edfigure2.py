@@ -38,7 +38,7 @@ med = np.load('../data/bkgs/medframe.npy', allow_pickle=True)
 
 # plots the main image
 im = ax_main.imshow(med, vmin=vmin, vmax=vmax, aspect='auto', cmap=cmap1)
-ax_main.text(s='(a)', x=20, y=texty, zorder=10, color='w')
+ax_main.text(s='(a)', x=20, y=texty, zorder=10, color='w', fontweight='bold')
 
 labels = ['ADF', 'LPC', 'NE', 'AT']
 axes1 = [e1, a1, s1, l1]
@@ -69,10 +69,10 @@ for n in range(len(labels)):
 
     # label the subplots
     axes1[n].text(s='({}1)'.format(letters[n]),
-            x=textx, y=texty, zorder=10, color='w')
+            x=textx, y=texty, zorder=10, color='w', fontweight='bold')
 
     axes2[n].text(s='({}2)'.format(letters[n]),
-                x=textx, y=texty, zorder=10)
+                x=textx, y=texty, zorder=10, fontweight='bold')
 
 # make all the xlims and ylims the same
 for ax in [ax_main, a1, a2, s1, s2, e1, e2, l1, l2]:
@@ -101,5 +101,5 @@ e1.set_ylabel('y pixel', fontsize=22)
 a2.set_xlabel('x pixel', fontsize=22, x=1.1)
 
 
-plt.savefig('../figures/img_comps.pdf',
+plt.savefig('../figures/img_comps.jpg',
             rasterize=True, bbox_inches='tight', dpi=250)

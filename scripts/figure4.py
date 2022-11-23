@@ -8,6 +8,7 @@ import matplotlib
 from matplotlib import cm
 from matplotlib.patches import Arrow
 from matplotlib.gridspec import GridSpec
+import matplotlib.gridspec as gridspec
 from astropy.table import Table, Column, vstack
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
@@ -42,15 +43,20 @@ fig.set_facecolor('w')
 
 cutends = 15
 
-# plots the data and reference model on both subplots
+fig, (ax1,ax2) = plt.subplots(nrows=2, figsize=(14,12), sharex=True,
+                              sharey=True)
+fig.set_facecolor('w')
+
+cutends = 15
+
 for i, a in enumerate([ax1, ax2]):
     a.errorbar(data['wave'], data['dppm']/1e6,
              xerr=data['wave_error'],
              yerr=data['dppm_err']/1e6,
              linestyle='', marker='o',
-             markeredgecolor='#b0acaa',
-             ecolor='#b0acaa',
-             color='k', zorder=1)
+             markeredgecolor='#b3afad',
+             ecolor='#b3afad',
+             color='w', zorder=1)
     ref = convolve_model(ref_file)
 
     if i == 0:
@@ -62,20 +68,21 @@ for i, a in enumerate([ax1, ax2]):
              label=label, lw=3,
              c='k', zorder=20)
 
-# sets the colormap for the C/O and metallicity subplots
-co_norm = matplotlib.colors.Normalize(vmin=0.35, vmax=0.8)
+
+co_norm = matplotlib.colors.Normalize(vmin=0.4, vmax=0.9)
 z_norm = matplotlib.colors.Normalize(vmin=-1.2, vmax=2.5)
 
-# plots the C/O models
 co_vals = [0.55, 0.70, 0.80]
+vals = [0.6, 0.7, 0.8]
 c = ['#24abff', '#1f88c9', '#155d8a']
+
 for i,fn in enumerate(co_files):
     model = convolve_model(fn)
     ax1.plot(model[0][cutends:-cutends], model[1][cutends:-cutends],
              label='{0:.2f}'.format(co_vals[i]), lw=2.5,
-             c=cm.Blues(co_norm(co_vals[i])), zorder=10)
+             c=cm.viridis(co_norm(vals[i])),
+             zorder=10)
 
-# plots the metallicity models
 z_vals = [0.0, 0.5, 1.0, 1.5, 2.0, 2.25]
 z_vals = [0.0, 1.0, 2.0, 2.25]
 for i,fn in enumerate(z_files):
@@ -84,7 +91,6 @@ for i,fn in enumerate(z_files):
              label='{0:.2f}'.format(z_vals[i]), lw=2,
              c=cm.YlOrRd(z_norm(z_vals[i])))
 
-# sets the limits, ticks, and labels for the x-axis
 plt.xlim(0.6,2.86)
 ax2.set_xlabel('wavelength [$\mu$m]')
 ax1.set_ylabel('transit depth [%]')
@@ -94,18 +100,16 @@ xticks = np.append(np.linspace(0.6,2,6), np.linspace(2.3,2.8,2))
 xticks = np.round(xticks,2)
 plt.xticks(xticks, labels=np.round(xticks,2))
 
-# sets the limits, ticks, and labels for the y-axis
 yticks = np.round(np.arange(0.0205, 0.0230, 0.0005),4)
 ax1.set_yticks(yticks)
 labels = np.round(yticks*100,2)
 labels = [format(i, '.2f') for i in labels]
 ax1.set_yticklabels(labels)
 
-# labels the subplots
-ax1.text(s='(a)', x=0.61, y=0.0222, fontsize=20)
-ax2.text(s='(b)', x=0.61, y=0.0222, fontsize=20)
+ax1.text(s='(a)', x=0.61, y=0.0222, fontsize=20, fontweight='bold')
+ax2.text(s='(b)', x=0.61, y=0.0222, fontsize=20, fontweight='bold')
 
-# creates the legends for both subplots
+
 leg = ax1.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
                  ncol=4, mode="expand", borderaxespad=0.,
                  fontsize=16, title='carbon-to-oxygen ratio (C/O)')
@@ -118,7 +122,11 @@ leg = ax2.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
 for legobj in leg.legendHandles:
     legobj.set_linewidth(5.0)
 
-plt.subplots_adjust(hspace=0.43)
+plt.minorticks_off()
 
-plt.savefig('../figures/co_metallicity.pdf',
-           dpi=300, rasterize=True, bbox_inches='tight')
+plt.subplots_adjust(hspace=0.3)
+
+plt.savefig(#'/Users/belugawhale/Desktop/contribution.png',
+            '../figures/contribution.jpg',
+             dpi=250,
+            rasterize=True, bbox_inches='tight')

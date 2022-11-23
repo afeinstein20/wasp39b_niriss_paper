@@ -107,8 +107,8 @@ ax2.set_ylabel("transit depth [%]")
 ax2.set_xlabel("wavelength [$\mu$m]")
 
 # labels each subplot
-ax1.text(s='(a)', x=0.61, y=2.22, fontsize=20)
-ax2.text(s='(b)', x=0.61, y=2.22, fontsize=20)
+ax1.text(s='(a)', x=0.61, y=2.22, fontsize=20, fontweight='bold')
+ax2.text(s='(b)', x=0.61, y=2.22, fontsize=20, fontweight='bold')
 
 # create the axes legends
 for a in [ax1, ax2]:
@@ -133,5 +133,5 @@ plt.minorticks_off()
 plt.ylim(2.02,2.25)
 plt.yticks(np.arange(2.05,2.3,0.05))
 
-plt.savefig('../figures/transmission_grid_summary.pdf',
+plt.savefig('../figures/transmission_grid_summary.jpg',
                dpi=300, rasterize=True, bbox_inches='tight', transparent=False)

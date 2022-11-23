@@ -121,5 +121,5 @@ for a in [ax1, ax2, ax3]:
 plt.subplots_adjust(hspace=0.1)
 plt.minorticks_off()
 
-plt.savefig('../figures/transmission_spectrum_all.pdf', dpi=300, rasterize=True,
+plt.savefig('../figures/transmission_spectrum_all.jpg', dpi=300, rasterize=True,
             bbox_inches='tight')

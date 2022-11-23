@@ -157,8 +157,8 @@ labels = [format(i, '.2f') for i in labels]
 ax1.set_yticklabels(labels)
 
 # add subplot labels
-ax1.text(s='(a)', x=0.61, y=0.0223, fontsize=20)
-ax2.text(s='(b)', x=0.61, y=-21.9, fontsize=20)
+ax1.text(s='(a)', x=0.61, y=0.0223, fontsize=20, fontweight='bold')
+ax2.text(s='(b)', x=0.61, y=-21.9, fontsize=20, fontweight='bold')
 
-plt.savefig('../figures/contribution.pdf', dpi=250, rasterize=True,
+plt.savefig('../figures/contribution.jpg', dpi=250, rasterize=True,
             bbox_inches='tight')

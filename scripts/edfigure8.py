@@ -1,6 +1,7 @@
 # PLOTS THE POTASSIUM FEATURE
 import os
 import numpy as np
+import seaborn as sns
 from scipy import stats
 from matplotlib import cm
 import matplotlib.pyplot as plt
@@ -56,17 +57,23 @@ cNorm  = colors.Normalize(vmin=0, vmax=len(chi_arr))
 scalarMap = cm.ScalarMappable(norm=cNorm, cmap=new_cmap)
 
 # initializes the figure
-fig, ax = plt.subplots(figsize=(10,6))
+cmap_name = sns.color_palette("rocket", as_cmap=True)
+
+CMAP = plt.get_cmap(cmap_name)
+new_cmap= truncate_colormap(CMAP , 0.1, 2.0)
+chi_arr=np.arange(1., 9, 0.1)
+cNorm  = colors.Normalize(vmin=1, vmax=12)
+scalarMap = cm.ScalarMappable(norm=cNorm, cmap=new_cmap)
+
+
+fig, ax = plt.subplots(figsize=(12,6))
 fig.set_facecolor('w')
 
-# creates inset axes for colorbar
 cax = ax.inset_axes([0.56, 0.73, 0.4, 0.4])
 
-# removes bad ends of the models (not the data)
 cutends = 15
 R=300
 
-# plots the R=300 data
 q = data['quality']==0
 ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
          xerr=data['wave_error'][q],
@@ -77,7 +84,6 @@ ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
          markeredgewidth=1.5,
          color='w', zorder=200, label='R=300')
 
-# plots the instrument resolution data
 ax.errorbar(full[:,0], full[:,2],
          xerr=full[:,1],
          yerr=full[:,3],
@@ -87,11 +93,14 @@ ax.errorbar(full[:,0], full[:,2],
          color='#c7c3c0', zorder=0, label='instrument resolution')
 
 
-inds = np.linspace(0,200,len(models),dtype=int)
+inds = np.linspace(0,235,len(models),dtype=int)
+inds[-3] = 210
 idx_y = np.array([])
 
-for i, fn in enumerate(models):
+rocket = sns.color_palette("rocket", 7)
+r = 0
 
+for i, fn in enumerate(models):
     if i > 0:
         m0 = convolve_model(models[i-1], R=R)
 
@@ -100,76 +109,77 @@ for i, fn in enumerate(models):
     if i < len(models)-1:
         m2 = convolve_model(models[i+1], R=R)
 
-
-    if i % 2 == 0:
-        lw = 2
-        label='K/O = {}'.format(np.round(ko_labels[i],1))
-    else:
-        lw = 0
-        label=''
-
-    # plots every other [K/O] model
-    ax.plot(m1[0][cutends:-cutends], m1[1][cutends:-cutends],
-             color=parula[inds[i]],
-             lw=lw, label=label)
-
-    # grabs the color based on the chi^2/N-value of that model
-    idx = (np.abs(np.array(chi_arr) - (ko_chi2[i]/1.13))).argmin()
+    idx = (np.abs(np.array(chi_arr) - (ko_chi2[i]/1.3))).argmin()
     colorVal = scalarMap.to_rgba(idx)
     idx_y = np.append(idx_y, idx)
 
-    # fills in the background based on the chi^2/N-value of that model
+
+    if i % 2 == 0:
+        lw = 3
+        label='[K/O] = {}'.format(np.round(ko_labels[i],1))
+    else:
+        lw = 0
+        label=''
+        r += 1
+
+    ax.plot(m1[0][cutends:-cutends], m1[1][cutends:-cutends],
+             color=parula[inds[i]],
+             lw=lw, label=label, zorder=100)
+
+    alpha=0.65
+    lw=0.0
+
     if i > 0 and i < len(models)-1:
         ax.fill_between(m1[0][cutends:-cutends],
                          (m0[1][cutends:-cutends]+m1[1][cutends:-cutends])/2.0,
                          (m1[1][cutends:-cutends]+m2[1][cutends:-cutends])/2.0,
-                         zorder=1, color=colorVal, alpha=0.7,
-                         lw=0)
+                         zorder=1, color=colorVal, alpha=alpha,
+                         lw=lw)
 
     elif i == 0:
         ax.fill_between(m1[0][cutends:-cutends],
                          m1[1][cutends:-cutends]-0.00003,
                          (m1[1][cutends:-cutends]+m2[1][cutends:-cutends])/2.0,
-                         zorder=1, color=colorVal, alpha=0.7,
-                         lw=0)
+                         zorder=1, color=colorVal, alpha=alpha,
+                         lw=lw)
 
     elif i == len(models)-1:
         ax.fill_between(m1[0][cutends:-cutends],
                          (m0[1][cutends:-cutends]+m1[1][cutends:-cutends])/2.0,
                          m1[1][cutends:-cutends]+0.00003,
-                         zorder=0, color=colorVal, alpha=0.7,
-                         lw=0)
+                         zorder=0, color=colorVal, alpha=alpha,
+                         lw=lw)
 
-# sets the x-limit and label for the full plot
+
 ax.set_xlim(full[:,0][0], full[:,0][-1])
 ax.set_xlabel('wavelength [$\mu$m]')
-
-# sets the y-limit, label, and ticks for the full plot
 ax.set_ylabel('transit depth [%]')
+
 yticks = np.round(np.arange(0.0205, 0.0230, 0.0005),4)
 ax.set_yticks(yticks)
 labels = np.round(yticks*100,2)
 labels = [format(i, '.2f') for i in labels]
 ax.set_yticklabels(labels)
-ax.set_ylim(0.0205,0.02215)
+ax.set_ylim(0.0208,0.02215)
 
-# really hacky colorbar
-cax.imshow(np.full((30,300), np.linspace(np.nanmin(sigma),np.nanmax(sigma),300)),
-          cmap='Oranges_r', alpha=0.7)
+cmin = 1.5
+cmax = 8.0
+cax.imshow(np.full((30,300),
+                   np.linspace(cmin, cmax,300)),
+           cmap=cmap_name, alpha=alpha)
 
 sort = np.argsort(idx_y)
-fit = interp1d(np.linspace(np.nanmin(sigma),np.nanmax(sigma),300),
+fit = interp1d(np.linspace(cmin, cmax, 300),
                np.arange(0,300,1))
-# sets the ticks for the colorbar
-ticks = np.arange(2, 10, 2.0)
+
+ticks = np.arange(2, 9, 1,dtype=int)
 cax.set_xticks(fit(ticks))
 cax.set_xticklabels(np.round(ticks,2))
 cax.set_yticks([])
-# sets the label for the colorbar
+
 cax.set_xlabel(r'$\sigma$-deviation')
 cax.yaxis.set_label_position("right")
 
-# creates the legend
 leg = ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
                  ncol=3, mode="expand", borderaxespad=0.,
                  fontsize=16)
@@ -178,5 +188,5 @@ for legobj in leg.legendHandles:
 
 plt.subplots_adjust(wspace=0.05)
 
-plt.savefig('../figures/potassium.pdf',
+plt.savefig('../figures/potassium.jpg',
            dpi=300, rasterize=True, bbox_inches='tight')

@@ -97,12 +97,12 @@ def avg_lightcurves(i, data, err, idx_oot, per=5):
 
     e = (np.sqrt(np.nansum(error,axis=0))/len(error))/np.nanmax(fnorm)
     f = np.nanmean(flux, axis=0)
-    m = np.nanmean(model, axis=0)
+    m = np.nanmax(model[-2:], axis=0)
 
     f /= np.nanmedian(f[idx_oot])
     m /= np.nanmedian(m[idx_oot])
 
-    return f, e, m, wmed, lim
+    return f, e, m, wmed, lim, wrange[0], wrange[-1], model, flux
 
 def get_MAD_sigma(x, median):
     """

@@ -72,8 +72,8 @@ ax2.indicate_inset_zoom(axins2, edgecolor="black")
 ax2.set_xlabel('Wavelength [$\mu$m]', fontsize=22)
 ax2.set_ylabel('Flux [DN s$^{-1}$]', fontsize=22, y=1.1)
 
-ax1.text(s='(a)', x=0.87, y=7300)
-ax2.text(s='(b)', x=0.567, y=3200)
+ax1.text(s='(a)', x=0.87, y=7300, fontweight='bold')
+ax2.text(s='(b)', x=0.567, y=3200, fontweight='bold')
 
 leg = ax1.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
                  ncol=3, mode="expand", borderaxespad=0., fontsize=16)
@@ -82,5 +82,5 @@ for legobj in leg.legendHandles:
     legobj.set_linewidth(6.0)
 
 plt.subplots_adjust(hspace=0.25)
-plt.savefig('../figures/stellar_spectra.pdf',
+plt.savefig('../figures/stellar_spectra.jpg',
             rasterize=True, bbox_inches='tight', dpi=300)

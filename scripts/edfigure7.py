@@ -151,8 +151,9 @@ labels = [format(i, '.2f') for i in labels]
 ax.set_yticklabels(labels)
 
 # adds the labels for each subplot
-ax0.text(s=r'(a) $\lambda$ = 0.63 - 2.80 $\mu$m', x=0.61, y=0.0222)
-ax.text(s=r'(b) $\lambda$ < 2.00 $\mu$m', x=0.61, y=0.0222)
+ax0.text(s=r'(a) $\lambda$ = 0.63 - 2.80 $\mu$m', x=0.61, y=0.0222,
+         fontweight='bold')
+ax.text(s=r'(b) $\lambda$ < 2.00 $\mu$m', x=0.61, y=0.0222, fontweight='bold')
 
 # creates the legend for both subplots
 leg = ax0.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
@@ -161,5 +162,5 @@ leg = ax0.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
 for legobj in leg.legendHandles:
     legobj.set_linewidth(5.0)
 
-plt.savefig('../figures/shortward.pdf',
+plt.savefig('../figures/shortward.jpg',
            dpi=300, rasterize=True, bbox_inches='tight')
