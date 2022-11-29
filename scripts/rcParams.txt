@@ -1,4 +1,5 @@
 name,value
+pdf.fonttype,42
 font.size,20
 text.color,black
 axes.labelcolor,black
