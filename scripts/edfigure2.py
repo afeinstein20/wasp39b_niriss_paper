@@ -101,5 +101,5 @@ e1.set_ylabel('y pixel', fontsize=22)
 a2.set_xlabel('x pixel', fontsize=22, x=1.1)
 
 
-plt.savefig('../figures/img_comps.jpg',
+plt.savefig('../figures/img_comps.pdf', #transparent=True,
             rasterize=True, bbox_inches='tight', dpi=250)

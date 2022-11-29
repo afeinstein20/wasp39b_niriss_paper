@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 from utils import load_plt_params
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
+
 
 # Load in the spectrum
 obs = Table.read('../data/ts/CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.csv',
@@ -24,6 +26,7 @@ bestparam  = [r'[M/H]=1.7, C/O=0.229, $\chi^2/N_{\rm obs}=$2.98', #PICASO
 #----- Plot figure
 fig, (ax1, ax2) = plt.subplots(figsize=(14,8), nrows=2, sharex=True,
                                sharey=True)
+fig.set_facecolor('w')
 
 # sets some aesthetic choices
 kwargs = {'lw':2.5}
@@ -133,5 +136,6 @@ plt.minorticks_off()
 plt.ylim(2.02,2.25)
 plt.yticks(np.arange(2.05,2.3,0.05))
 
-plt.savefig('../figures/transmission_grid_summary.jpg',
-               dpi=300, rasterize=True, bbox_inches='tight', transparent=False)
+plt.savefig('../figures/transmission_grid_summary.pdf',
+            #transparent=True,
+            dpi=300, rasterize=True, bbox_inches='tight')

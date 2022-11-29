@@ -13,10 +13,14 @@ sys.path.append('/Users/belugawhale/Documents/GitHub/nirhiss/')
 from src.nirhiss.utils import get_MAD_sigma
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 
 # Load in colors and filenames
 pipeline_dict = pipeline_dictionary()
+
+if COLOR == 'white':
+    pipeline_dict['AT']['color'] = '#dbd7d3'
 
 # Set up the figure environment
 fig = plt.figure(figsize=(18, 16))
@@ -45,8 +49,6 @@ xlim = [-3, 3]
 names = ['ADF', 'MCR', 'ZR', 'NE', 'LPC', 'AT']
 pipelines = ['nirHiss',  'supreme-SPOON', 'FIREFly',
              'transitspectroscopy', 'NAMELESS', 'iraclis']
-
-
 
 order = 1
 
@@ -170,5 +172,6 @@ for legobj in leg.legendHandles:
 ax_legend.set_axis_off()
 
 #plt.tight_layout()
-plt.savefig('../figures/stacked_white_light_curves.jpg',
+plt.savefig('../figures/stacked_white_light_curves.pdf',
+            #transparent=True,
             rasterize=True, bbox_inches='tight', dpi=250)

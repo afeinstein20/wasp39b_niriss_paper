@@ -14,7 +14,8 @@ from utils import (load_plt_params, convolve_model, load_parula,
                    truncate_colormap)
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 parula = load_parula()
 
 # grabs files in [K/O] directory
@@ -79,8 +80,8 @@ ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
          xerr=data['wave_error'][q],
          yerr=data['dppm_err'][q]/1e6,
          linestyle='', marker='o',
-         markeredgecolor='k',
-         ecolor='k', ms=8, lw=2,
+         markeredgecolor=COLOR,
+         ecolor=COLOR, ms=8, lw=2,
          markeredgewidth=1.5,
          color='w', zorder=200, label='R=300')
 
@@ -188,5 +189,6 @@ for legobj in leg.legendHandles:
 
 plt.subplots_adjust(wspace=0.05)
 
-plt.savefig('../figures/potassium.jpg',
-           dpi=300, rasterize=True, bbox_inches='tight')
+plt.savefig('../figures/potassium.pdf',
+            #transparent=True,
+            dpi=300, rasterize=True, bbox_inches='tight')

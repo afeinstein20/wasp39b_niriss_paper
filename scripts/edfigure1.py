@@ -160,5 +160,5 @@ ax2.set_xlabel('x pixel position', fontsize=24)
 plt.subplots_adjust(wspace=0.2)
 
 
-plt.savefig('../figures/traces.jpg',
+plt.savefig('../figures/traces.pdf',
             rasterize=True, bbox_inches='tight', dpi=250)

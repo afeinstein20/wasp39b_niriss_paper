@@ -7,9 +7,13 @@ import matplotlib.pyplot as plt
 from utils import load_plt_params, pipeline_dictionary
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
+
 color_dict = pipeline_dictionary()
 
+if COLOR == 'white':
+    color_dict['AT']['color'] = '#dbd7d3'
 
 path = '../data/stellar_spectra'
 nirhiss = np.load(os.path.join(path, 'nirhiss_spectra.npy'))
@@ -21,7 +25,7 @@ nameless = np.load(os.path.join(path, 'nameless_spectra.npy'), allow_pickle=True
 firefly = np.load(os.path.join(path, 'firefly_spectra.npy'), allow_pickle=True)
 
 
-fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(14,8))
+fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(16, 8))
 fig.set_facecolor('w')
 
 axins1 = ax1.inset_axes([0.55, 0.4, 0.42, 0.5])
@@ -66,8 +70,8 @@ ax2.set_ylim(0,3750)
 axins2.set_xlim(0.67, 0.78)
 axins2.set_ylim(2500,3650)
 
-ax1.indicate_inset_zoom(axins1, edgecolor="black")
-ax2.indicate_inset_zoom(axins2, edgecolor="black")
+ax1.indicate_inset_zoom(axins1, edgecolor=COLOR)
+ax2.indicate_inset_zoom(axins2, edgecolor=COLOR)
 
 ax2.set_xlabel('Wavelength [$\mu$m]', fontsize=22)
 ax2.set_ylabel('Flux [DN s$^{-1}$]', fontsize=22, y=1.1)
@@ -76,11 +80,12 @@ ax1.text(s='(a)', x=0.87, y=7300, fontweight='bold')
 ax2.text(s='(b)', x=0.567, y=3200, fontweight='bold')
 
 leg = ax1.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-                 ncol=3, mode="expand", borderaxespad=0., fontsize=16)
+                 ncol=3, mode="expand", borderaxespad=0.,
+                 fontsize=16)
 
 for legobj in leg.legendHandles:
     legobj.set_linewidth(6.0)
 
 plt.subplots_adjust(hspace=0.25)
-plt.savefig('../figures/stellar_spectra.jpg',
+plt.savefig('../figures/stellar_spectra.pdf', #transparent=True,
             rasterize=True, bbox_inches='tight', dpi=300)

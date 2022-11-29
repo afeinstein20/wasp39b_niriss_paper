@@ -16,7 +16,8 @@ from matplotlib.colors import LinearSegmentedColormap
 from utils import load_plt_params, convolve_model, load_parula
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 parula = load_parula()
 
 # load in the NIRISS spectrum
@@ -62,13 +63,18 @@ fig.set_facecolor('w')
 cutends = 15
 
 q = data['quality']==0
+
+if COLOR == 'black':
+    bkg_color = '#e8e3e0'
+else:
+    bkg_color = '#787674'
 ax.errorbar(data['wave'][q], data['dppm'][q]/1e6,
          xerr=data['wave_error'][q],
          yerr=data['dppm_err'][q]/1e6,
          linestyle='', marker='o',
-         markeredgecolor='#e8e3e0',
-         ecolor='#e8e3e0',
-         color='#e8e3e0', zorder=1)
+         markeredgecolor=bkg_color,
+         ecolor=bkg_color,
+         color=bkg_color, zorder=1)
 
 ax0.errorbar(data['wave'][q], data['dppm'][q]/1e6,
              xerr=data['wave_error'][q],
@@ -93,7 +99,7 @@ ref = convolve_model(ref_file)
 for a in [ax, ax0]:
     a.plot(ref[0][cutends:-cutends], ref[1][cutends:-cutends],
             label='ref. [2.59]', lw=3,
-            c='k', zorder=10)
+            c=COLOR, zorder=10)
 
 # sets the key for the color/label dictionary based on the filename
 def set_key(filename):
@@ -130,7 +136,8 @@ for i,ind in enumerate([1,2,4,5,0]):
     name = cdict[k]['name']
 
     ax0.plot(model[0][cutends:-cutends],
-             model[1][cutends:-cutends], lw=2, color=parula[cind],
+             model[1][cutends:-cutends],
+             lw=2, color=parula[cind],
              label=name, zorder=3)
 
 # sets the limits, ticks, and labels for the x-axis
@@ -162,5 +169,6 @@ leg = ax0.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
 for legobj in leg.legendHandles:
     legobj.set_linewidth(5.0)
 
-plt.savefig('../figures/shortward.jpg',
-           dpi=300, rasterize=True, bbox_inches='tight')
+plt.savefig('../figures/shortward.pdf',
+            #transparent=True,
+            dpi=300, rasterize=True, bbox_inches='tight')

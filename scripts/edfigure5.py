@@ -9,10 +9,14 @@ import matplotlib.pyplot as plt
 from utils import pipeline_dictionary, load_plt_params, convolve_model
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 
 # Load in colors and filenames
 pipeline_dict = pipeline_dictionary()
+
+if COLOR == 'white':
+    pipeline_dict['AT']['color'] = '#dbd7d3'
 
 # set the reference model file
 ref_file = '../data/Main_Models/model_reference.txt'
@@ -121,5 +125,7 @@ for a in [ax1, ax2, ax3]:
 plt.subplots_adjust(hspace=0.1)
 plt.minorticks_off()
 
-plt.savefig('../figures/transmission_spectrum_all.jpg', dpi=300, rasterize=True,
+plt.savefig('../figures/transmission_spectrum_all.pdf',
+            dpi=300, rasterize=True,
+            #transparent=True,
             bbox_inches='tight')
