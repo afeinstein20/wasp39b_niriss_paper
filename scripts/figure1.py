@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 from utils import load_plt_params, load_parula, avg_lightcurves, get_MAD_sigma
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
 colors = load_parula()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 
 
 # Load in the spectroscopic light curves
@@ -42,7 +43,8 @@ c, o = 0, 0
 textx = -0.15
 alpha=0.25
 
-text_kwargs = {'color':'k', 'zorder':20, 'fontsize':15,
+text_kwargs = {'color':COLOR,
+               'zorder':20, 'fontsize':15,
                'fontweight':'bold'}
 
 idx_oot = np.append(np.arange(0,200,1,dtype=int),
@@ -161,5 +163,7 @@ ax2.set_rasterized(True)
 
 plt.subplots_adjust(wspace=0.15, hspace=0)
 
-plt.savefig('../figures/spec_lcs.jpg', dpi=200, rasterize=True,
+plt.savefig('../figures/spec_lcs.pdf',
+            dpi=200, rasterize=True,
+            #transparent=True,
             bbox_inches='tight')

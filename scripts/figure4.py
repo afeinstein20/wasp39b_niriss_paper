@@ -16,7 +16,9 @@ from matplotlib.colors import LinearSegmentedColormap
 from utils import load_plt_params, convolve_model, convolve_model_xy
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
+
 
 # load in NIRISS spectrum
 data = Table.read('../data/ts/CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.csv',
@@ -37,12 +39,6 @@ z_files = np.sort([os.path.join(path, i) for i in os.listdir(path) if
 z_files = np.array(z_files)[np.array([0,2,4,5])] # selects only 4 models
 
 # creates the figure environment
-fig, (ax1,ax2) = plt.subplots(nrows=2, figsize=(14,12), sharex=True,
-                              sharey=True)
-fig.set_facecolor('w')
-
-cutends = 15
-
 fig, (ax1,ax2) = plt.subplots(nrows=2, figsize=(14,12), sharex=True,
                               sharey=True)
 fig.set_facecolor('w')
@@ -126,7 +122,7 @@ plt.minorticks_off()
 
 plt.subplots_adjust(hspace=0.3)
 
-plt.savefig(#'/Users/belugawhale/Desktop/contribution.png',
-            '../figures/contribution.jpg',
+plt.savefig('../figures/co_metallicity.pdf',
              dpi=250,
-            rasterize=True, bbox_inches='tight')
+             #transparent=True,
+             rasterize=True, bbox_inches='tight')

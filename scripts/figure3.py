@@ -17,8 +17,9 @@ from utils import (load_plt_params, convolve_model, convolve_model_xy,
                    load_parula)
 
 # set the matplotlib parameters
-load_plt_params()
+pltparams = load_plt_params()
 parula = load_parula()
+COLOR = pltparams[pltparams['name']=='text.color']['value'][0]
 
 data = Table.read('../data/ts/CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.csv',
                   format='csv', comment='#')
@@ -69,7 +70,8 @@ for i,m in enumerate(no_models):
 
 # convolve the model reference and plot
 x, y = convolve_model('../data/contributions/models/model_reference.txt')
-ax1.plot(x[cutends:-cutends], y[cutends:-cutends], 'k', lw=3, zorder=100,
+ax1.plot(x[cutends:-cutends], y[cutends:-cutends], COLOR,
+         lw=3, zorder=100,
          label='ref.')
 
 # sets the species to plot for each subpanel (and their labels)
@@ -160,5 +162,7 @@ ax1.set_yticklabels(labels)
 ax1.text(s='(a)', x=0.61, y=0.0223, fontsize=20, fontweight='bold')
 ax2.text(s='(b)', x=0.61, y=-21.9, fontsize=20, fontweight='bold')
 
-plt.savefig('../figures/contribution.jpg', dpi=250, rasterize=True,
+plt.savefig('../figures/contribution.pdf',
+            dpi=250, rasterize=True,
+            #transparent=True,
             bbox_inches='tight')
