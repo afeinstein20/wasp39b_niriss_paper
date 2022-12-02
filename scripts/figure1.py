@@ -148,8 +148,8 @@ ax2.set_xlim(-0.152,0.152)
 fs = 24
 ax2.set_ylabel('residuals + offset'.format(i+1), fontsize=fs)
 ax1.set_ylabel('relative flux + offset'.format(i+1), fontsize=fs)
-ax1.set_xlabel('time from mid-transit [hr]', fontsize=fs)
-ax2.set_xlabel('time from mid-transit [hr]', fontsize=fs)
+ax1.set_xlabel('time from mid-transit [day]', fontsize=fs)
+ax2.set_xlabel('time from mid-transit [day]', fontsize=fs)
 
 ax1.set_ylim(0.735, 1.02)
 ax2.set_ylim(-0.265, 0.02)

@@ -37,6 +37,8 @@ def pipeline_dictionary():
         pipeline_dict[name]['color'] = pipelines['color'][i]
         pipeline_dict[name]['name'] = pipelines['name'][i]
         pipeline_dict[name]['filename'] = pipelines['filename'][i]
+        pipeline_dict[name]['author'] = pipelines['author'][i]
+        pipeline_dict[name]['contact'] = pipelines['contact'][i]
 
     return pipeline_dict
 
