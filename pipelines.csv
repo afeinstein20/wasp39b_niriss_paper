@@ -1,0 +1,8 @@
+initials,color,name,filename,HR_filename,author,contact
+ZR,#419e60,FIREFly,ZR-WASP_39b_NIRISS_transmission_spectrum.csv,ZR-WASP_39b_NIRISS_transmission_spectrum_highres.csv,Zafar Rustamkulov,zafar@jhu.edu
+AT,#404040,iraclis,AT-WASP_39b_NIRISS_transmission_spectrum.csv,,Angelos Tsiaras,angelos.tsiaras@inaf.it
+CMADF,#b02e37,nirHiss,CMADF-WASP_39b_NIRISS_transmission_spectrum_R300.csv,CMADF-WASP_39b_NIRISS_transmission_spectrum_highres.csv,Adina Feinstein,afeinstein@uchicago.edu
+LPC,#93648D,NAMELESS,LPC-WASP_39b_NIRISS_transmission_spectrum.csv,LPC-WASP_39b_NIRISS_transmission_spectrum_highres.csv,Louis-Philippe Coulombe,louis-philippe.coulombe@umontreal.ca
+NE,#4ab9cc,transitspectroscopy,NE-WASP_39b_NIRISS_transmission_spectrum.csv,NE-WASP_39b_NIRISS_transmission_spectrum_highres.csv,Nestor Espinoza,nespinoza@stsci.edu
+MCR,#ffb62f,supreme-SPOON,MCR-WASP_39b_NIRISS_transmission_spectrum.csv,MCR-WASP_39b_NIRISS_transmission_spectrum_highres.csv,Michael Radica,michael.radica@umontreal.ca
+ADF,#b02e37,nirHiss,,,Adina Feinstein,afeinstein@uchicago.edu

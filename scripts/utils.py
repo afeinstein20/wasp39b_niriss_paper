@@ -29,7 +29,7 @@ def pipeline_dictionary():
     """ Loads in the custom colors for the paper figures.
     """
     pipeline_dict = {}
-    pipelines = Table.read('../data/pipelines.csv', format='csv')
+    pipelines = Table.read('pipelines.csv', format='csv')
 
     # Sets the initials key for each pipeline
     for i, name in enumerate(pipelines['initials']):
